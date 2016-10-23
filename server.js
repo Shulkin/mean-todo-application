@@ -65,6 +65,12 @@ app.delete("/api/todos/:todo_id", function(req, res) {
     });
   });
 });
+// default route will lead to index.html
+app.get("*", function(req, res) {
+  // load the single view file
+  // Angular will handle the page changes on the front-end
+  res.sendFile("./public/index.html");
+});
 
 // listen port 3000
 app.listen(3000);
