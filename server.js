@@ -21,6 +21,51 @@ app.use(bodyParser.json({type: 'application/vnd.api+json'}));
 app.use(bodyParser.urlencoded({"extended": "true"}));
 app.use(methodOverride());
 
+// define todo model
+var Todo = mongoose.model("Todo", {
+  // MongoDB will automatically generate an _id
+  text: String
+});
+
+// express routes
+// get all todos
+app.get("/api/todos", function(req, res) {
+  // use mongoose model to get all todos from database
+  Todo.find(function(err, todos) {
+    if (err) res.send(err);
+    res.json(todos); // return all todos in JSON format
+  });
+});
+// create single todo
+app.post("/api/todos", function(req, res) {
+  // create a todo, data comes from AJAX request from Angular
+  Todo.create({
+    text: req.body.text,
+    done: false
+  }, function(err, todo) {
+    if (err) res.send(err);
+    // get and return all todos after you create a new one
+    Todo.find(function(err, todos) {
+      if (err) res.send(err);
+      res.json(todos);
+    });
+  });
+});
+// delete single todo
+app.delete("/api/todos/:todo_id", function(req, res) {
+  // _id which todo delete comes from request params
+  Todo.remove({
+    _id: req.params.todo_id
+  }, function(err, todo) {
+    if (err) res.send(err);
+    // get all todos after delete
+    Todo.find(function(err, todos) {
+      if (err) res.send(err);
+      res.json(todos);
+    });
+  });
+});
+
 // listen port 3000
 app.listen(3000);
 console.log("Server started at port 3000");
