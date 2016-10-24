@@ -14,7 +14,7 @@ mongoose.connect("mongodb://localhost:27017/todo_db")
 // configuration
 app.use(express.static(__dirname + "/public"));
 app.use(morgan("dev")); // log every request to the console
-app.use(podyParser.json()); // parse application/json
+app.use(bodyParser.json()); // parse application/json
 // parse application/vnd.api+json as json
 app.use(bodyParser.json({type: 'application/vnd.api+json'}));
 // parse application/x-www-form-urlencoded
