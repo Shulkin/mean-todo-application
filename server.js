@@ -8,7 +8,7 @@ var methodOverride = require("method-override"); // simulate DELETE and PUT
 // init express app
 var app = express();
 // set the port
-var port = process.env.PORT || 3001;
+var port = process.env.PORT || 3000;
 
 // load the database config
 var database = require("./config/database");
